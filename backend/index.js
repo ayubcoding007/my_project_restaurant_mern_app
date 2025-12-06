@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://restaurant-frontend.vercel.app"   // ⚠️ इसे अपने असली frontend URL से replace करना है
+    "https://restaurant-frontend.vercel.app"   
   ],
   credentials: true
 }));
