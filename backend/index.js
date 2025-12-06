@@ -10,30 +10,42 @@ import orderRoutes from "./routes/orderRoutes.js";
 import bookingRoutes from "./routes/bookingRoutes.js";
 import dotenv from "dotenv";
 import connectCloudinary from "./config/cloudinary.js";
+
 dotenv.config();
+
 const app = express();
-// database connection
+
+// DB
 connectDB();
 connectCloudinary();
-// middlewares
+
+// Middlewares
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://restaurant-frontend.vercel.app"   // ⚠️ इसे अपने असली frontend URL से replace करना है
+  ],
+  credentials: true
+}));
+
 app.use(cookieParser());
-const PORT = process.env.PORT || 5000;
+
+// Routes
 app.get("/", (req, res) => {
   res.send("Hello from server");
 });
+
 app.use("/api/auth", authRoutes);
 app.use("/api/category", categoryRoutes);
 app.use("/api/menu", menuRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/booking", bookingRoutes);
+
+const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
-  console.log(`server is running on port http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
